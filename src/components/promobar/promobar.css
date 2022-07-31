@@ -13,4 +13,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+}
+
+
+@media screen and (max-width: 440px){
+    .promobar{
+        font-size: 10px;
+    }
 }

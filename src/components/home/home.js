@@ -3,7 +3,7 @@ import './home.css';
 
 const Home = () => {
     return (
-        <div className="home">
+        <div id='home' className="home">
             <div className="home__banner">
                 <div className='home__banner__img__container'>
                     <img src={banner} alt="banner" className="home__banner__img"></img>
@@ -13,12 +13,18 @@ const Home = () => {
                         LUCID DREAMS
                     </h1>
                     <p className="home__banner__text__description">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/>
-                        Donec euismod, nisl eget consectetur sagittis,<br/>
-                        nisl nisi consectetur nisi, euismod eget nisl nisi<br/>
-                        consectetur nisi.<br/>
+                        Formado en 2020, Lucid Dreams (LD) es un sello discográfico integrado por artistas,
+                        productores, diseñadores, etc. Que trabajan juntos creando música apoyandose
+                        mutuamente en proyectos tanto grupales como individuales.<br/>LD le da la
+                        oportunidad a la gente de desarrollar su talento y alcanzar su máximo potencial en su
+                        trabajo.
                     </p>
-                    <button className="home__banner__text__button"> Leer más </button>
+                    <button className="home__banner__text__button" onClick={ e => {
+                        e.preventDefault();
+                        window.scroll({
+                            top: window.innerHeight-80
+                        });
+                    }}> Saber más </button>
                 </div>
             </div>
         </div>

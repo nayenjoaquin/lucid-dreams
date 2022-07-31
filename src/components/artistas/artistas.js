@@ -3,7 +3,7 @@ import Carrousel from './carrousel';
 
 const Artistas = (props) => {
     return(
-        <div className="artistas">
+        <div id='artistas' className="artistas">
             <h3 className='artistas__title'>CONOCE A NUESTROS ARTISTAS</h3>
             <Carrousel></Carrousel>
         </div>

@@ -1,5 +1,5 @@
 import {motion} from 'framer-motion'
-import {useRef, useEffect, useState} from 'react'
+import {useState} from 'react'
 import CarrouselItem from './carrousel-item';
 import artistas from '../../data/artistas';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

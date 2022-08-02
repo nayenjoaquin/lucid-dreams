@@ -36,14 +36,12 @@
     font-size: 30px;
     width: 100%;
     text-align: center;
-    transform: translateY(5px);
 }
 .navbar__logo__dreams{
     margin: 0;
     font-size: 16px;
     width: 100%;
     text-align: center;
-    transform: translateY(-5px);
 }
 
 .logo-mobile{
@@ -54,7 +52,7 @@
     display: flex;
     align-items: center;
     list-style: none;
-    gap: 40px;
+    gap: 30px;
 }
 
 .navbar__icon-container{
@@ -104,6 +102,7 @@
     font-size: 16px;
     background-color: transparent;
     transition: width .2s ease;
+    color: white;
 }
 .search-bar__input:hover{
     color: white;

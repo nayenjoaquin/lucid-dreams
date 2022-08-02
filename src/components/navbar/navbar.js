@@ -103,7 +103,7 @@ const NavBar = (props) => {
                     }}> Contacto </a>
                 </li>
                 <li className='navbar__menu__item'>
-                    <a href='/' className='navbar__menu__item__link'> Acerca </a>
+                    <a href='/' className='navbar__menu__item__link'> Tienda </a>
                 </li>
                 <div id='input-active-background' className='input-active-background' onClick={closeSearchInput}></div>
                 <li id='desktop-search-icon' className='search-bar-desktop' onClick={showDesktopInput}>

@@ -27,3 +27,8 @@ code {
   z-index: 10;
   display: none;
 }
+
+.App{
+  display: flex;
+  flex-direction: column;
+}

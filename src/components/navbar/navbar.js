@@ -92,18 +92,23 @@ const NavBar = (props) => {
                         window.scroll({
                             top: window.innerHeight-80
                         });
-                    }}> Artistas </a>
+                    }}> Musica </a>
                 </li>
                 <li className='navbar__menu__item'>
                     <a href='/' className='navbar__menu__item__link' onClick={ e => {
                         e.preventDefault();
                         window.scroll({
-                            top: window.innerHeight*2 - 80
+                            top: (window.innerHeight - 80)*2
                         });
-                    }}> Contacto </a>
+                    }}> Artistas </a>
                 </li>
                 <li className='navbar__menu__item'>
-                    <a href='/' className='navbar__menu__item__link'> Tienda </a>
+                    <a href='/' className='navbar__menu__item__link'onClick={ e => {
+                        e.preventDefault();
+                        window.scroll({
+                            top: (window.innerHeight - 80)*3
+                        });
+                    }}> Contacto </a>
                 </li>
                 <div id='input-active-background' className='input-active-background' onClick={closeSearchInput}></div>
                 <li id='desktop-search-icon' className='search-bar-desktop' onClick={showDesktopInput}>

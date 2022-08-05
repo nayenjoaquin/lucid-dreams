@@ -1,0 +1,162 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.player{
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    z-index: 50;
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+.reproductor{
+    width: 100%;
+    max-width: 600px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    border-radius: 5px 5px 0 0;
+    transition: all .2s ease;
+}
+
+.reproductor__full{
+    display: none;
+}
+
+.reproductor__bottom{
+    height: 80px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.reproductor__bottom__content{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.reproductor__bottom__content__img{
+    height: 60px;
+    width: 60px;
+    border-radius: 3px;
+    object-fit: contain;
+}
+.reproductor__bottom__content__info{
+    display: flex;
+    flex-direction: column;
+    color: #333;
+    width: 100%;
+    max-width: 200px;
+}
+.reproductor__bottom__content__info__title{
+    color: #333;
+    font-size: 16px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.reproductor__bottom__content__info__artist{
+    font-size: 12px;
+    color: #666;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.reproductor__bottom__player{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+    max-width: 250px;
+    min-width: 200px;
+}
+.reproductor__bottom__player__buttons{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    z-index: 55;
+}
+.reproductor__bottom__player__buttons__next{
+    background-color: transparent;
+    border: none;
+    color: #333;
+    font-size: 16px;
+    padding: 2px 5px;
+    cursor: pointer;
+    transition: all .1s ease;
+}
+.reproductor__bottom__player__buttons__next:hover{
+    transform: translateY(-1px);
+    color: #111;
+}
+.reproductor__bottom__player__buttons__play{
+    background-color: transparent;
+    border: none;
+    color: #333;
+    font-size: 24px;
+    padding: 2px 5px;
+    cursor: pointer;
+    transition: all .1s ease;
+}
+.reproductor__bottom__player__buttons__play:hover{
+    transform: translateY(-1px);
+    color: #111;
+}
+
+.reproductor__bottom__player__timeline{
+    position: relative;
+}
+
+.reproductor__bottom__player__timeline__slider{
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 8px; /* Specified height */
+    background: #ccc; /* Grey background */
+    outline: none; /* Remove outline */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+.reproductor__bottom__player__timeline__slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 16px; /* Set a specific slider handle width */
+    height: 16px; /* Slider handle height */
+    border-radius: 50%;
+    background: #333;
+    cursor: pointer; /* Cursor on hover */
+}
+.reproductor__bottom__player__timeline__slider::-moz-range-thumb {
+    width: 16px; /* Set a specific slider handle width */
+    height: 16px; /* Slider handle height */
+    border-radius: 50%;
+    background: #333;
+    cursor: pointer; /* Cursor on hover */
+}
+.reproductor__bottom__player__timeline__labels{
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    top: -23px;
+    width: 100%;
+    font-size: 12px;
+    padding: 0 2px;
+}
+
+@media screen and (max-width: 600px){
+    .reproductor__bottom__player__timeline{
+        display: none;
+    }
+    .reproductor__bottom__player{
+        min-width: 100px;
+        width: 100px;
+    }
+    .reproductor__bottom{
+        padding: 10px;
+    }
+}

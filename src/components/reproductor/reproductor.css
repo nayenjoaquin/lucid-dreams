@@ -17,22 +17,23 @@
 .reproductor{
     width: 100%;
     max-width: 600px;
+    height: 60px;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
     border-radius: 5px 5px 0 0;
     transition: all .2s ease;
+    cursor: pointer;
 }
-
-.reproductor__full{
+.reproductor__minimize-btn{
     display: none;
 }
-
 .reproductor__bottom{
-    height: 80px;
+    height: 60px;
     padding: 10px 20px;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
+    transition: all .2s ease;
 }
 .reproductor__bottom__content{
     display: flex;
@@ -40,10 +41,11 @@
     align-items: center;
 }
 .reproductor__bottom__content__img{
-    height: 60px;
-    width: 60px;
+    height: 40px;
+    width: 40px;
     border-radius: 3px;
     object-fit: contain;
+    transition: all .2s ease;
 }
 .reproductor__bottom__content__info{
     display: flex;
@@ -110,13 +112,15 @@
 
 .reproductor__bottom__player__timeline{
     position: relative;
+    display: flex;
+    margin-top: 3px;
 }
 
 .reproductor__bottom__player__timeline__slider{
     -webkit-appearance: none;  /* Override default CSS styles */
     appearance: none;
     width: 100%; /* Full-width */
-    height: 8px; /* Specified height */
+    height: 4px; /* Specified height */
     background: #ccc; /* Grey background */
     outline: none; /* Remove outline */
     -webkit-transition: .2s; /* 0.2 seconds transition on hover */
@@ -125,8 +129,8 @@
 .reproductor__bottom__player__timeline__slider::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
     appearance: none;
-    width: 16px; /* Set a specific slider handle width */
-    height: 16px; /* Slider handle height */
+    width: 12px; /* Set a specific slider handle width */
+    height: 12px; /* Slider handle height */
     border-radius: 50%;
     background: #333;
     cursor: pointer; /* Cursor on hover */
@@ -148,6 +152,36 @@
     padding: 0 2px;
 }
 
+.reproductor__bottom__expand-btn{
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    color: #333;
+    font-weight: 800;
+    cursor: pointer;
+    padding: 5px 8px;
+    transition: all .1s ease;
+}
+.reproductor__bottom__expand-btn:hover{
+    transform: translateY(-2px);
+    color: #000;
+}
+
+.reproductor__bottom__quit-btn{
+    background-color: transparent;
+    border: none;
+    color: #333;
+    font-size: 24px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all .1s ease;
+}
+.reproductor__bottom__quit-btn:hover{
+    transform: translateY(-2px);
+    color: #000;
+}
+
+
 @media screen and (max-width: 600px){
     .reproductor__bottom__player__timeline{
         display: none;
@@ -157,6 +191,98 @@
         width: 100px;
     }
     .reproductor__bottom{
-        padding: 10px;
+        padding: 20px;
     }
+    .reproductor{
+        border-radius: 0;
+    }
+    .player{
+        padding: 0;
+    }
+}
+
+.full{
+    height: 80vh;
+    width: 100%;
+    z-index: 100;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .5);
+    position: relative;
+    cursor: auto;
+
+}
+.full .reproductor__minimize-btn{
+    display: block;
+    position: absolute;
+    background: transparent;
+    border: none;
+    color: #333;
+    font-size: 24px;
+    top: 20px;
+    right: 20px;
+    padding: 5px 8px;
+    transition: all .1s ease;
+    cursor: pointer;
+    z-index: 110;
+}
+.full .reproductor__minimize-btn:hover{
+    transform: translateY(-2px);
+    color: #000;
+}
+
+.full .reproductor__bottom{
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-evenly;
+}
+
+.full .reproductor__bottom__content{
+    flex-direction: column;
+}
+
+.full .reproductor__bottom__content__img{
+    height: 250px;
+    width: 250px;
+    border-radius: 10px;
+}
+.full .reproductor__bottom__content__info{
+    display: flex;
+    justify-content: flex-start;
+    max-width: 250px;
+}
+.full .reproductor__bottom__content__info__title{
+    font-size: 20px;
+    font-weight: 600;
+}
+.full .reproductor__bottom__content__info__artist{
+    font-size: 16px;
+}
+.full .reproductor__bottom__player{
+    gap: 10px;
+    width: 300px;
+    max-width: 300px;
+}
+
+.full .reproductor__bottom__player__buttons{
+    gap: 20px;
+}
+.full .reproductor__bottom__player__buttons__next{
+    font-size: 24px;
+}
+.full .reproductor__bottom__player__buttons__play{
+    font-size: 32px;
+}
+.full .reproductor__bottom__player__timeline{
+    display: flex;
+}
+.full .reproductor__bottom__player__timeline__labels{
+    top: 10px;
+}
+
+.hidden{
+    transform: translateY(80px);
+}
+
+.full .reproductor__bottom__quit-btn{
+    display: none;
 }

@@ -1,33 +1,56 @@
 import { useState } from 'react'
 import './reproductor.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBackward, faForward, faPause, faPlay } from '@fortawesome/free-solid-svg-icons'
+import { faBackward, faForward, faPause, faPlay, faAngleDown, faXmark } from '@fortawesome/free-solid-svg-icons'
 
 const Reproductor = (props) => {
     const {title, artist} = {...props}
 
     const [play, setPlay] = useState(true)
 
-    const playMusic = () => {
+    const playMusic = (e) => {
+        e.stopPropagation();
         setPlay(true)
     }
 
-    const pauseMusic = () => {
+    const pauseMusic = (e) => {
+        e.stopPropagation();
         setPlay(false)
+    }
+
+    const nextSong = (e) => {
+        e.stopPropagation();
+    }
+    const previousSong = (e) => {
+        e.stopPropagation();
+    }
+    const showFullPlayer = () => {
+        console.log("click en div")
+        const reproductor = document.getElementById("reproductor")
+        if(!reproductor.classList.contains("full"))reproductor.classList.add("full")
+    }
+    const hideFullPlayer = () => {
+        const reproductor = document.getElementById("reproductor")
+        if(reproductor.classList.contains("full"))reproductor.classList.remove("full")
+    }
+    const quitPlayer = (e) => {
+        e.stopPropagation();
+        const reproductor = document.getElementById("reproductor")
+        if(!reproductor.classList.contains("hidden"))reproductor.classList.add("hidden")
     }
 
     const coverArt = require(`../../assets/img/${title.toUpperCase()} - ${artist.toUpperCase()}.jpg`)
 
     return(
         <div className="player">
-            <div className='reproductor'>
-                <div className='reproductor__full'>
-                    <div className='reproductor__full__img'></div>
-                    <div className='reproductor__full__info'>
-                        <div className='reproductor__full__info__title'>{title}</div>
-                        <div className='reproductor__full__info__artist'>{artist}</div>
-                    </div>
-                </div>
+            <div id='reproductor' className='reproductor hidden' onClick={e => {
+                e.preventDefault();
+                showFullPlayer()
+            }}>
+                <button className='reproductor__minimize-btn' onClick={e => {
+                    e.stopPropagation();
+                    hideFullPlayer();
+                }}><FontAwesomeIcon icon={faAngleDown}></FontAwesomeIcon></button>
                 <div className='reproductor__bottom'>
                     <div className='reproductor__bottom__content'>
                         <img className='reproductor__bottom__content__img' src={coverArt} alt="img"></img>
@@ -38,7 +61,7 @@ const Reproductor = (props) => {
                     </div>
                     <div className='reproductor__bottom__player'>
                         <div className='reproductor__bottom__player__buttons'>
-                            <button className='reproductor__bottom__player__buttons__next'>
+                            <button className='reproductor__bottom__player__buttons__next' onClick={previousSong}>
                                 <FontAwesomeIcon icon={faBackward}></FontAwesomeIcon>
                             </button>
                             {   play
@@ -49,7 +72,7 @@ const Reproductor = (props) => {
                                     <FontAwesomeIcon icon={faPlay}></FontAwesomeIcon>
                                 </button>
                             }
-                            <button className='reproductor__bottom__player__buttons__next'>
+                            <button className='reproductor__bottom__player__buttons__next' onClick={nextSong}>
                                 <FontAwesomeIcon icon={faForward}></FontAwesomeIcon>
                             </button>
                         </div>
@@ -59,9 +82,9 @@ const Reproductor = (props) => {
                                 <p className='reproductor__bottom__player__timeline__labels__value'>0:00</p>
                                 <p className='reproductor__bottom__player__timeline__labels__duration'>3:21</p>
                             </div>
-                            
                         </div>
                     </div>
+                    <button className='reproductor__bottom__quit-btn' onClick={quitPlayer}><FontAwesomeIcon icon={faXmark}></FontAwesomeIcon></button>
                 </div>
             </div>
         </div>

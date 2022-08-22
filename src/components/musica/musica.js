@@ -4,11 +4,26 @@ import SongItem from './song-item.js'
 
 const Musica = () => {
 
+    const shufflePlaylist = async (e) => {
+        e.stopPropagation();
+        console.log(e.currentTarget)
+        var target = "";
+        if(e.currentTarget.classList.contains("main")) return null;
+        else if(e.currentTarget.classList.contains("second")) target = "second"
+        else target = "third";
+        
+        const main = document.getElementsByClassName("main")[0]
+        main.classList.remove("main")
+        main.classList.add(target)
+        e.currentTarget.classList.remove(target)
+        e.currentTarget.classList.add("main")
+    }
+
     return(
         <div className="musica">
-            <div className='musica__last-releases'>
-                <p className='musica__last-releases__title'>Últimos lanzamientos</p>
-                <div className='musica__last-releases__songs'>
+            <div className='musica__playlist main' onClick={shufflePlaylist}>
+                <p className='musica__playlist__title'>Últimos lanzamientos</p>
+                <div className='musica__playlist__songs'>
                     {
                         songs.map( (value, index) => {
                             return <SongItem titulo={value.titulo} artista={value.artista} key={index}/>
@@ -16,11 +31,13 @@ const Musica = () => {
                     }
                 </div>
             </div>
-            <div className='musica__most-listened'>
-                <p className='musica__most-listened__title'>Lo más escuchado</p>
+            <div className='musica__playlist second' onClick={shufflePlaylist}>
+                <p className='musica__playlist__title'>Lo más escuchado</p>
+                
             </div>
-            <div className='musica__coming-soon'>
-                <p className='musica__coming-soon__title'>Próximamente...</p>
+            <div className='musica__playlist third' onClick={shufflePlaylist}>
+                <p className='musica__playlist__title'>Próximamente...</p>
+                
             </div>
         </div>
     )

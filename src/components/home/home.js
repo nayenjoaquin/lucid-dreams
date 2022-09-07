@@ -22,9 +22,9 @@ const Home = () => {
                     <button className="home__banner__text__button" onClick={ e => {
                         e.preventDefault();
                         window.scroll({
-                            top: window.innerHeight-80
+                            top: (window.innerHeight)-80
                         });
-                    }}> Saber más </button>
+                    }}> Escuchanos </button>
                 </div>
             </div>
         </div>

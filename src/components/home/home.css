@@ -11,7 +11,7 @@
 
 .home__banner{
     width: 100%;
-    height: calc(100vh - 112px);
+    height: calc(100vh - 80px);
     position: relative;
     display: flex;
     justify-content: center;
@@ -64,7 +64,7 @@
     position: relative;
     display: block;
     height: 45px;
-    width: 150px;
+    width: 200px;
     margin-top: 20px;
     padding: 5px 5px;
     font-weight: 600;

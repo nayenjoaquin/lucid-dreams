@@ -2,8 +2,12 @@ import './navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import logo_negro from '../../assets/img/logo-negro.png'
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const NavBar = (props) => {
+
+    const navigate = useNavigate()
+    const location = useLocation()
 
     const showMenu = (e) =>{
         e.preventDefault()
@@ -58,6 +62,7 @@ const NavBar = (props) => {
         <nav className="navbar">
             <div className='navbar__logo' onClick={ e => {
                 e.preventDefault();
+                if(location.pathname !== '/') navigate('/')
                 window.scroll({
                     top: 0,
                     behavior: "smooth"
@@ -80,6 +85,7 @@ const NavBar = (props) => {
                 <li className='navbar__menu__item'>
                     <a href='/' className='navbar__menu__item__link' onClick={ e => {
                         e.preventDefault();
+                        if(location.pathname !== '/') navigate('/')
                         window.scroll({
                             top: 0,
                             behavior: "smooth"
@@ -89,26 +95,14 @@ const NavBar = (props) => {
                 <li className='navbar__menu__item'>
                     <a href='/' className='navbar__menu__item__link' onClick={ e => {
                         e.preventDefault();
+                        if(location.pathname !== '/') navigate('/')
                         window.scroll({
                             top: window.innerHeight-80
                         });
                     }}> Musica </a>
                 </li>
                 <li className='navbar__menu__item'>
-                    <a href='/' className='navbar__menu__item__link' onClick={ e => {
-                        e.preventDefault();
-                        window.scroll({
-                            top: (window.innerHeight - 80)*2
-                        });
-                    }}> Artistas </a>
-                </li>
-                <li className='navbar__menu__item'>
-                    <a href='/' className='navbar__menu__item__link'onClick={ e => {
-                        e.preventDefault();
-                        window.scroll({
-                            top: (window.innerHeight - 80)*3
-                        });
-                    }}> Contacto </a>
+                    <a href='/admin' className='navbar__menu__item__link' > Admin </a>
                 </li>
                 <div id='input-active-background' className='input-active-background' onClick={closeSearchInput}></div>
                 <li id='desktop-search-icon' className='search-bar-desktop' onClick={showDesktopInput}>

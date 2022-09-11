@@ -26,7 +26,8 @@ const NewSong = (props) => {
 
     const [name,setName] = useState("Nombre de la canción");
     const [artists,setArtists] = useState([]);
-    const [img,setImg] = useState(false);
+    // const [img,setImg] = useState(false);
+    const img = false;
 
     return(
         <div className="admin__songs__new-song" onClick={ e => {
@@ -61,7 +62,7 @@ const NewSong = (props) => {
 
                 <div className="admin__songs__new-song__form__inputs">
                     <div className="group">      
-                        <input type="text" name="titulo" required onChange={ e => {
+                        <input className="input" type="text" name="titulo" required onChange={ e => {
                             if(e.target.value.length > 0){
                                 setName(e.target.value);
                             }else{

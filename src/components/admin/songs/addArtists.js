@@ -1,6 +1,6 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './inputs.css'
 import './artists.css'
 
@@ -66,7 +66,7 @@ const AddArtists = ( props ) => {
             <p className='add-artistas__title'>Seleccione los artistas que participan en la canción:</p>
 
             <div className="group add-artist-input">      
-                <input  id="add-artist-input" autoComplete='off' type="text" name="artista" required onBlur={ e => {
+                <input  className="input" id="add-artist-input" autoComplete='off' type="text" name="artista" required onBlur={ e => {
                     setShowArtists(false);
                     e.currentTarget.value = "";
                 }} onFocus={ async e => {
@@ -80,7 +80,7 @@ const AddArtists = ( props ) => {
                     showArtists
                     ? <div className='add-artistas__artists'>
                         {
-                            matchedArtists.length == 0
+                            matchedArtists.length === 0
                             ?  <p className='add-artistas__artists__artist no-results'>No se encontraron artistas :c</p>
                             :   matchedArtists.map( (artista,key) => {
                                 return(

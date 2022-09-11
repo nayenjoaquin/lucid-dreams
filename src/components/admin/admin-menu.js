@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronDown, faTableColumns } from '@fortawesome/free-solid-svg-icons'
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 
 const AdminMenu = (props) => {
 
@@ -9,13 +9,26 @@ const AdminMenu = (props) => {
     const navigate = useNavigate()
 
     const pages = [
-        {name: 'Panel', path: '/admin/dashboard', icon: faTableColumns},
+        {name: 'Panel', path: '/admin/dashboard'},
         {name: 'Canciones', path: '/admin/songs'},
         {name: 'Artistas', path: '/admin/artists'},
-        {name: 'Playlists', path: '/admin/playlists'},
     ]
 
     return(
+        <>
+        <div className='admin__mobile__menu'>
+            <ul>
+                { pages.map((page, index) => {
+                    let className = 'admin__mobile__menu__page'
+                    if("/admin/" + activePage === page.path) className += ' activePage'
+                    return(
+                        <li className={className} key={index} onClick={() => navigate(page.path)}>
+                            <h5>{page.name}</h5>
+                        </li>
+                    )
+                })}
+            </ul>
+        </div>
         <div className="admin__menu">
             <ul>
                 {pages.map((page, index) => {
@@ -34,6 +47,7 @@ const AdminMenu = (props) => {
                 })}
             </ul>
         </div>
+        </>
     )
 }
 

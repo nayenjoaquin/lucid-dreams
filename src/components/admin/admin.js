@@ -4,7 +4,6 @@ import AdminMenu from './admin-menu'
 import { useParams } from 'react-router-dom'
 import Songs from './songs/songs'
 import Artists from './artists/artists'
-import Playlists from './playlists/playlists'
 
 const Admin = () => {
 
@@ -13,14 +12,13 @@ const Admin = () => {
     return(
         <div className="admin">
             <AdminMenu activePage={
-                page != null ? page : 'dashboard'
+                page != null ? page : 'songs'
             }/>
             {
                 page === 'dashboard' ? <Dashboard/>
                 : page === 'songs' ? <Songs/>
                 : page === 'artists' ? <Artists/>
-                : page === 'playlists' ? <Playlists/>
-                : page == null ? <Dashboard/>
+                : page == null ? <Songs/>
                 : null
             }
         </div>

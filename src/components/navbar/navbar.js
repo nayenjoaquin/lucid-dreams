@@ -102,7 +102,7 @@ const NavBar = (props) => {
                     }}> Musica </a>
                 </li>
                 <li className='navbar__menu__item'>
-                    <a href='/admin' className='navbar__menu__item__link' > Admin </a>
+                    <a href='/#/admin' className='navbar__menu__item__link' > Admin </a>
                 </li>
                 <div id='input-active-background' className='input-active-background' onClick={closeSearchInput}></div>
                 <li id='desktop-search-icon' className='search-bar-desktop' onClick={showDesktopInput}>

@@ -9,9 +9,9 @@ const AdminMenu = (props) => {
     const navigate = useNavigate()
 
     const pages = [
-        {name: 'Dashboard', path: '/admin/dashboard', icon: faTableColumns},
-        {name: 'Songs', path: '/admin/songs'},
-        {name: 'Artists', path: '/admin/artists'},
+        {name: 'Panel', path: '/admin/dashboard', icon: faTableColumns},
+        {name: 'Canciones', path: '/admin/songs'},
+        {name: 'Artistas', path: '/admin/artists'},
         {name: 'Playlists', path: '/admin/playlists'},
     ]
 

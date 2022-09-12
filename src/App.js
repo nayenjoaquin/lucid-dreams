@@ -5,8 +5,10 @@ import Musica from './components/musica/musica';
 import Reproductor from './components/reproductor/reproductor';
 import { Route, Routes } from 'react-router-dom';
 import Admin from './components/admin/admin';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
+
   return (
     <div className="App">
       <NavBar/>

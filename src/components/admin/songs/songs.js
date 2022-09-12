@@ -1,4 +1,4 @@
-import { faPlus } from "@fortawesome/free-solid-svg-icons"
+import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import "./songs.css";
 import { useState } from "react";
@@ -11,6 +11,11 @@ const FilterBar = ( props ) => {
 
     return(
         <div className="admin__songs__filterbar">
+            <div className="admin__songs__filterbar__search-bar">
+                <FontAwesomeIcon icon={faSearch} className="admin__songs__filterbar__search-bar__icon"/>
+                <input type="text" placeholder="Search" name="song-search" className="admin__songs__filterbar__search-bar__input"/>
+            </div>
+
             <button className="admin__songs__filterbar__add-song-btn" onClick={ e => {
                 e.stopPropagation();
                 setNewSongForm(true);
@@ -21,7 +26,9 @@ const FilterBar = ( props ) => {
     )
 }
 
-const Songs = () => {
+const Songs = (props) => {
+
+    const { toast } = props;
 
     const [newSongForm, setNewSongForm] = useState(false);
     
@@ -30,9 +37,11 @@ const Songs = () => {
             <div className="admin__songs admin__subpage">
                 <FilterBar setNewSongForm={setNewSongForm}/>
                 <div className="admin__songs__list"></div>
+
             </div>
-            {
-                newSongForm ? <NewSong setNewSongForm={setNewSongForm}/> : null
+
+            {  // NEW SONG FORM VIEW
+                newSongForm ? <NewSong setNewSongForm={setNewSongForm} toast={toast}/> : null
             }
         </>
     )

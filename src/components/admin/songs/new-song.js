@@ -1,33 +1,67 @@
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faMusic } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react"
 import AddArtists from "./addArtists";
 import "./inputs.css"
+import artistas from "./artistas";
+import { storage } from "../../../firebase";
+import { ref, uploadBytes } from "firebase/storage";
+import Compressor from "compressorjs";
 
 const NewSong = (props) => {
 
-    const artistas = [
-        "NPC",
-        "SANTI",
-        "Z4RB3",
-        "M4R1",
-        "J4V13R",
-        "andres",
-        "luis",
-        "jose",
-        "juan",
-        "pedro",
-        "maria",
-        "josefa",
-        "javier",
-    ]
+    const { setNewSongForm, toast } = props;
 
-    const { setNewSongForm } = props;
-
-    const [name,setName] = useState("Nombre de la canción");
+    const [name,setName] = useState("Nombre de la canción assadsa asd sda");
     const [artists,setArtists] = useState([]);
-    // const [img,setImg] = useState(false);
-    const img = false;
+    const [img,setImg] = useState(null);
+    const [song,setSong] = useState(null);
+
+    const uploadImg = (resolve) => {
+        if(img==null) return;
+        new Compressor(img, {
+            quality: 0.6,
+            success(result) {
+                const storageRef = ref(storage, `images/${result.name}`);
+                uploadBytes(storageRef, result).then((snapshot) => {
+                    resolve();
+                });
+            },
+            error(err) {
+                console.log(err.message);
+            },
+        });
+    }
+
+    const uploadSong = (resolve) => {
+        if(song==null) return;
+        const storageRef = ref(storage, `songs/${song.name}`);
+        uploadBytes(storageRef, song).then((snapshot) => {
+            resolve();
+        });
+    }
+
+    const uploadFiles = new Promise(async (resolve,reject) => {
+        new Promise((resolve,reject) => {
+            uploadImg(resolve);
+        }
+        ).then(() => {
+            uploadSong(resolve);
+        }
+        )
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        toast.promise(uploadFiles, {
+            pending: "Subiendo canción...",
+            success: "Canción subida correctamente",
+            error: "Error al subir la canción",
+        });
+        setNewSongForm(false);
+    }
+
+
 
     return(
         <div className="admin__songs__new-song" onClick={ e => {
@@ -41,12 +75,12 @@ const NewSong = (props) => {
                     <div className="admin__songs__new-song__form__header__img-container">
                         {
                             img
-                            ? null
+                            ? <img src={URL.createObjectURL(img)} alt="Song cover" className="admin__songs__new-song__form__header__img-container__img"/>
                             : <button className="admin__songs__new-song__form__header__img-container__add-img-btn" onClick={ e => {
                                 e.stopPropagation();
                                 e.preventDefault();
                             }}>
-                                <FontAwesomeIcon icon={faPlus}/>
+                                <FontAwesomeIcon icon={faMusic}/>
                             </button>
                         }
                     </div>
@@ -76,11 +110,15 @@ const NewSong = (props) => {
                     <AddArtists artistas={artistas.sort()} setArtists={setArtists}></AddArtists>
                     <div>
                         <p className="new-song__file-input__title">Seleccione el audio:</p>
-                        <input className="new-song__file-input" type="file" name="song-file" accept=".mp3, .wav" required/>
+                        <input onChange={ async e => {
+                            setSong(e.target.files[0]);
+                        }} className="new-song__file-input" type="file" name="song-file" accept=".mp3, .wav" required/>
                     </div>
                     <div>
                         <p className="new-song__file-input__title">Seleccione la imagen:</p>
-                        <input className="new-song__file-input" type="file" name="img-file" accept=".jpg, .jpeg, .png" required/>
+                        <input onChange={ async e => {
+                            setImg(e.target.files[0]);
+                        }} className="new-song__file-input" type="file" name="img-file" accept=".jpg, .jpeg, .png" required/>
                     </div>
                 </div>
 
@@ -90,10 +128,7 @@ const NewSong = (props) => {
                         e.preventDefault();
                         setNewSongForm(false);
                     }}>Cancelar</button>
-                    <button className="admin__songs__new-song__form__buttons__save-btn" onClick={ e => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                    }}>Guardar</button>
+                    <button className="admin__songs__new-song__form__buttons__save-btn" onClick={handleSubmit}>Guardar</button>
                 </div>
             </form>
         </div>

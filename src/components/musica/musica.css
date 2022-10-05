@@ -152,6 +152,12 @@
     color: black;
 }
 
+@media screen and (max-width: 1400px) {
+    .main .musica__playlist__title{
+        font-size: 50px;
+    }
+}
+
 
 @media screen and (max-width: 600px) {
     .musica{

@@ -9,6 +9,7 @@ import { toast, ToastContainer } from 'react-toastify'
 const Admin = () => {
     const page = useParams().page || "songs"
 
+
     return(
         <div className="admin">
             <AdminMenu activePage={page}/>
@@ -18,7 +19,7 @@ const Admin = () => {
                 : page === 'artists' ? <Artists/>
                 : null
             }
-            <ToastContainer/>
+            <ToastContainer pauseOnFocusLoss={ false } position="bottom-right"/>
         </div>
     )
 }

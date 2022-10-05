@@ -6,7 +6,7 @@ import './artists.css'
 
 const AddArtists = ( props ) => {
 
-    const { artistas , setArtists } = props;
+    const { artistas , setArtists} = props;
 
     const [ songArtists, setSongArtists ] = useState([]);
     const [ showArtists, setShowArtists ] = useState(false);

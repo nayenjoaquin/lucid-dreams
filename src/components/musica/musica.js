@@ -1,6 +1,5 @@
 import './musica.css';
-import songs from './songs.js'
-import SongItem from './song-item.js'
+import LastReleases from './last-releases';
 
 const Musica = () => {
 
@@ -21,16 +20,7 @@ const Musica = () => {
 
     return(
         <div className="musica">
-            <div className='musica__playlist main' onClick={shufflePlaylist}>
-                <p className='musica__playlist__title'>Últimos lanzamientos</p>
-                <div className='musica__playlist__songs'>
-                    {
-                        songs.map( (value, index) => {
-                            return <SongItem titulo={value.titulo} artista={value.artista} key={index}/>
-                        } )
-                    }
-                </div>
-            </div>
+            <LastReleases onClickFunction={shufflePlaylist}/>
             <div className='musica__playlist second' onClick={shufflePlaylist}>
                 <p className='musica__playlist__title'>Lo más escuchado</p>
                 

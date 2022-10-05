@@ -9,7 +9,13 @@ const SongItem = (props) => {
         if(player.classList.contains("hidden")) player.classList.remove("hidden")
     }
 
-    const coverArt = require(`../../assets/img/${titulo.toUpperCase()} - ${artista.toUpperCase()}.jpg`)
+    let coverArt = null
+    try {
+        coverArt = require(`../../assets/img/${titulo.toUpperCase()} - ${artista.toUpperCase()}.jpg`)
+    }
+    catch {
+        coverArt = require(`../../assets/img/DEFAULT.jpg`)
+    }
     return(
         <div className="song-item" onClick={playSong}>
             <div className="song-item__start">

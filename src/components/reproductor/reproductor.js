@@ -39,7 +39,13 @@ const Reproductor = (props) => {
         if(!reproductor.classList.contains("hidden"))reproductor.classList.add("hidden")
     }
 
-    const coverArt = require(`../../assets/img/${title.toUpperCase()} - ${artist.toUpperCase()}.jpg`)
+    let coverArt = null
+    try {
+        coverArt = require(`../../assets/img/${title.toUpperCase()} - ${artist.toUpperCase()}.jpg`)
+    }
+    catch {
+        coverArt = require(`../../assets/img/DEFAULT.jpg`)
+    }
 
     return(
         <div className="player">

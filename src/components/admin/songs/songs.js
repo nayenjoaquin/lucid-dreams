@@ -3,11 +3,25 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import "./songs.css";
 import { useState } from "react";
 import NewSong from "./new-song";
+import { useEffect } from "react";
+import { listSongs } from "../../../services/client";
 
 
 const FilterBar = ( props ) => {
 
     const { setNewSongForm } = props;
+
+    const [songsList, setSongsList] = useState([]);
+
+    useEffect(() => {
+        listSongs().then((songs) => {
+            setSongsList(songs);
+        });
+    }, []);
+
+    useEffect(() => {
+        console.log(songsList);
+    }, [songsList]);
 
     return(
         <div className="admin__songs__filterbar">

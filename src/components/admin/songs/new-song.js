@@ -1,6 +1,6 @@
 import { faMusic } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import AddArtists from "./addArtists";
 import "./inputs.css"
 import artistas from "./artistas";
@@ -8,6 +8,8 @@ import { storage } from "../../../firebase";
 import { ref, uploadBytes } from "firebase/storage";
 import Compressor from "compressorjs";
 import Swal from "sweetalert2";
+import { postSong } from "../../../services/admin";
+import md5 from "md5";
 
 const NewSong = (props) => {
 
@@ -17,11 +19,10 @@ const NewSong = (props) => {
     const [artists,setArtists] = useState([]);
     const [img,setImg] = useState(null);
     const [song,setSong] = useState(null);
-    const [releaseTitle, setReleaseTitle] = useState("");
 
     const uploadImg = (resolve) => {
         if(img==null) return;
-        const fileName = `${releaseTitle}.${img.name.split('.').pop()}`;
+        const fileName = `${md5(img.name)}.${img.name.split('.').pop()}`;
         new Compressor(img, {
             quality: 0.6,
             success(result) {
@@ -38,39 +39,50 @@ const NewSong = (props) => {
 
     const uploadSong = (resolve) => {
         if(song==null) return;
-        const fileName = `${releaseTitle}.${song.name.split('.').pop()}`;
+        const fileName = `${md5(song.name)}.${song.name.split('.').pop()}`;
         const storageRef = ref(storage, `songs/${fileName}`);
         uploadBytes(storageRef, song).then((snapshot) => {
             resolve();
         });
     }
 
-    const uploadFiles = new Promise(async (resolve,reject) => {
-        new Promise((resolve,reject) => {
-            uploadImg(resolve);
-        }
-        ).then(() => {
-            uploadSong(resolve);
-        }
-        )
-    });
-
-    const handleSubmit = (e) => {
+    const uploadFiles = (e) =>{
         e.preventDefault();
-        setReleaseTitle(name + " - " + artists.join(" x "))
+
+        toast.promise(new Promise(async (resolve) => {
+
+            new Promise((resolve) => {
+                uploadImg(resolve);
+            }
+            ).then(() => {
+                uploadSong(resolve);
+            }
+            ).then(() => {
+
+                const data = {
+                    titulo: name,
+                    artista: artists,
+                    date: new Date(),
+                    img: img==null ? null : `${md5(img.name)}.${img.name.split('.').pop()}`,
+                    song: song==null ? null : `${md5(song.name)}.${song.name.split('.').pop()}`,
+                }
+
+                postSong(data).then(() => {
+                    resolve();
+                })
+            }).catch((err) => {
+                console.log(err);
+            });
+
         
+        }), {
+            pending: 'Subiendo archivos',
+            success: 'Canción subida',
+            error: 'Error al subir la canción',
+        })
+        setNewSongForm(false);
     }
 
-    useEffect(() => {
-        if(releaseTitle == (name + " - " + artists.join(" x ")) && releaseTitle != "") {
-            toast.promise(uploadFiles, {
-                pending: "Subiendo canción...",
-                success: "Canción subida correctamente",
-                error: "Error al subir la canción",
-            });
-            setNewSongForm(false);
-        }
-    },[releaseTitle])
 
     const closeForm = (e) => {
         e.stopPropagation();
@@ -79,10 +91,10 @@ const NewSong = (props) => {
             text: "Si cierras el formulario perderás los datos que hayas escrito",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, cerrar',
-            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Si, salir',
+            cancelButtonText: 'Continuar',
             }).then((result) => {
             if (result.isConfirmed) {
                 setNewSongForm(false);
@@ -151,7 +163,7 @@ const NewSong = (props) => {
                         e.preventDefault();
                         closeForm(e);
                     }}>Cancelar</button>
-                    <button className="admin__songs__new-song__form__buttons__save-btn" onClick={handleSubmit}>Guardar</button>
+                    <button className="admin__songs__new-song__form__buttons__save-btn" onClick={uploadFiles}>Guardar</button>
                 </div>
             </form>
         </div>

@@ -2,20 +2,35 @@ import { useState } from 'react'
 import './reproductor.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBackward, faForward, faPause, faPlay, faAngleDown, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { useEffect } from 'react'
 
 const Reproductor = (props) => {
-    const {title, artist} = {...props}
+    const {title, artist, activeSong, setActiveSong} = {...props}
 
     const [play, setPlay] = useState(true)
 
+    useEffect(() => {
+        if(activeSong !== null){
+            activeSong.load()
+            activeSong.play()
+            setPlay(true)
+        }
+    }, [activeSong])
+
     const playMusic = (e) => {
         e.stopPropagation();
-        setPlay(true)
+        if(activeSong !== null){
+            activeSong.play()
+            setPlay(true)
+        }
     }
 
     const pauseMusic = (e) => {
         e.stopPropagation();
-        setPlay(false)
+        if(activeSong !== null){
+            activeSong.pause()
+            setPlay(false)
+        }
     }
 
     const nextSong = (e) => {
@@ -35,6 +50,8 @@ const Reproductor = (props) => {
     }
     const quitPlayer = (e) => {
         e.stopPropagation();
+        pauseMusic(e)
+        setActiveSong(null)
         const reproductor = document.getElementById("reproductor")
         if(!reproductor.classList.contains("hidden"))reproductor.classList.add("hidden")
     }

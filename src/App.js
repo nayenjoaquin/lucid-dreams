@@ -6,8 +6,11 @@ import Reproductor from './components/reproductor/reproductor';
 import { Route, Routes } from 'react-router-dom';
 import Admin from './components/admin/admin';
 import 'react-toastify/dist/ReactToastify.css';
+import { useState } from 'react';
 
 function App() {
+
+  const [activeSong, setActiveSong] = useState(null)
 
   return (
     <div className="App">
@@ -15,9 +18,9 @@ function App() {
       <Routes>
         <Route path='/' element={
           <>
-            <Reproductor title="Cuento de hadas" artist="NPC x thekmind"/>
+            <Reproductor title="Cuento de hadas" artist="NPC x thekmind" activeSong={activeSong} setActiveSong={setActiveSong}/>
             <Home/>
-            <Musica/>
+            <Musica setActiveSong={setActiveSong}/>
           </>
         }/>
         <Route path='/admin' element={<Admin/>}/>

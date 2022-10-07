@@ -1,11 +1,12 @@
 import './musica.css';
 import LastReleases from './last-releases';
 
-const Musica = () => {
+const Musica = (props) => {
+
+    const {setActiveSong} = {...props}
 
     const shufflePlaylist = async (e) => {
         e.stopPropagation();
-        console.log(e.currentTarget)
         var target = "";
         if(e.currentTarget.classList.contains("main")) return null;
         else if(e.currentTarget.classList.contains("second")) target = "second"
@@ -20,7 +21,7 @@ const Musica = () => {
 
     return(
         <div className="musica">
-            <LastReleases onClickFunction={shufflePlaylist}/>
+            <LastReleases onClickFunction={shufflePlaylist} setActiveSong={setActiveSong}/>
             <div className='musica__playlist second' onClick={shufflePlaylist}>
                 <p className='musica__playlist__title'>Lo más escuchado</p>
                 

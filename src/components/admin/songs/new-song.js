@@ -5,11 +5,11 @@ import AddArtists from "./addArtists";
 import "./inputs.css"
 import artistas from "./artistas";
 import { storage } from "../../../firebase";
-import { ref, uploadBytes } from "firebase/storage";
-import Compressor from "compressorjs";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Swal from "sweetalert2";
 import { postSong } from "../../../services/admin";
 import md5 from "md5";
+import imageCompression from 'browser-image-compression';
 
 const NewSong = (props) => {
 
@@ -20,59 +20,61 @@ const NewSong = (props) => {
     const [img,setImg] = useState(null);
     const [song,setSong] = useState(null);
 
-    const uploadImg = (resolve) => {
-        if(img==null) return;
-        const fileName = `${md5(img.name)}.${img.name.split('.').pop()}`;
-        new Compressor(img, {
-            quality: 0.6,
-            success(result) {
-                const storageRef = ref(storage, `images/${fileName}`);
-                uploadBytes(storageRef, result).then((snapshot) => {
-                    resolve();
-                });
-            },
-            error(err) {
-                console.log(err.message);
-            },
-        });
+    const compressionOptions = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1000,
+        useWebWorker: true
     }
 
-    const uploadSong = (resolve) => {
+    const uploadImg = async (releaseId, imgFile) => {
+        if(imgFile==null) return;
+        const fileName = `image.${imgFile.name.split('.').pop()}`;
+
+        const storageRef = ref(storage, `${releaseId}/${fileName}`);
+        await uploadBytes(storageRef, imgFile)
+        const url = await getDownloadURL(storageRef);
+        return url;
+    }
+
+    const uploadSong = async (releaseId) => {
         if(song==null) return;
-        const fileName = `${md5(song.name)}.${song.name.split('.').pop()}`;
-        const storageRef = ref(storage, `songs/${fileName}`);
-        uploadBytes(storageRef, song).then((snapshot) => {
-            resolve();
-        });
+        const fileName = `audio.${song.name.split('.').pop()}`;
+        const storageRef = ref(storage, `${releaseId}/${fileName}`);
+        await uploadBytes(storageRef, song)
+        const url = await getDownloadURL(storageRef);
+        return url;
+
     }
 
     const uploadFiles = (e) =>{
         e.preventDefault();
 
+        const releaseName = name + artists.join(" X ");
+        const releaseId = md5(releaseName);
+
         toast.promise(new Promise(async (resolve) => {
 
-            new Promise((resolve) => {
-                uploadImg(resolve);
-            }
-            ).then(() => {
-                uploadSong(resolve);
-            }
-            ).then(() => {
+            const compressedImg = await imageCompression(img, compressionOptions);
+            const imgURL = await uploadImg(releaseId,compressedImg);
+            const songURL = await uploadSong(releaseId);
+            
 
-                const data = {
-                    titulo: name,
-                    artista: artists,
-                    date: new Date(),
-                    img: img==null ? null : `${md5(img.name)}.${img.name.split('.').pop()}`,
-                    song: song==null ? null : `${md5(song.name)}.${song.name.split('.').pop()}`,
-                }
+            const data = {
+                titulo: name,
+                artista: artists,
+                date: new Date(),
+                id: releaseId,
+                audio: songURL,
+                img: imgURL,
+                youtube: "",
+                spotify: "",
+            }
 
-                postSong(data).then(() => {
-                    resolve();
-                })
-            }).catch((err) => {
-                console.log(err);
-            });
+            console.log(data);
+
+            postSong(data).then(() => {
+                resolve();
+            })
 
         
         }), {
@@ -148,6 +150,7 @@ const NewSong = (props) => {
                         <p className="new-song__file-input__title">Seleccione el audio:</p>
                         <input onChange={ async e => {
                             setSong(e.target.files[0]);
+                            console.log(e.target.files[0].duration);
                         }} className="new-song__file-input" type="file" name="song-file" accept=".mp3, .wav" required/>
                     </div>
                     <div>

@@ -122,10 +122,11 @@
     appearance: none;
     width: 100%; /* Full-width */
     height: 4px; /* Specified height */
-    background: #ccc; /* Grey background */
     outline: none; /* Remove outline */
     -webkit-transition: .2s; /* 0.2 seconds transition on hover */
     transition: opacity .2s;
+    cursor: pointer;
+    background: linear-gradient(to right, #ffaf36 0%, #ffaf36 50%, #ccc 50%, #ccc 100%);
 }
 .reproductor__bottom__player__timeline__slider::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
@@ -135,6 +136,11 @@
     border-radius: 50%;
     background: #333;
     cursor: pointer; /* Cursor on hover */
+    transition: transform .08s;
+}
+
+.reproductor__bottom__player__timeline__slider::-webkit-slider-thumb:hover{
+    transform: scale(1.15);
 }
 .reproductor__bottom__player__timeline__slider::-moz-range-thumb {
     width: 16px; /* Set a specific slider handle width */
